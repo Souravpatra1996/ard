@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+
+        }
+
+        .main {
+            height: 80vh;
+            width: 40vw;
+            margin: auto;
+            background-image: linear-gradient(to right, rgb(25, 180, 241), rgb(25, 241, 180));
+            margin-top: 10%;
+            border-radius: 20px;
+            left: 30%;
+
+
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .in {
+            width: 70%;
+            height: 40px;
+            margin-left: 6%;
+            margin-top: 20px;
+            border-radius: 20px;
+            border: none;
+            padding-left: 10px;
+        }
+
+        .btn {
+
+            width: 10%;
+            height: 40px;
+            margin-left: 2%;
+            margin-top: 20px;
+            border-radius: 20px;
+            border: none;
+            background-color: white;
+        }
+
+        .result {
+
+            margin: auto;
+            width: 40%;
+            height: 40%;
+            margin-top: 5%;
+            color: white;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 20px;
+            position: absolute;
+            visibility: visible;
+        }
+
+        .color {
+            width: 15%;
+            height: 10vh;
+            background-color: blue;
+            margin: auto;
+            margin-top: 20px;
+            border-radius: 30px;
+        }
+
+        .more {
+            width: 20%;
+            height: 40px;
+            margin-left: 2%;
+
+            border-radius: 20px;
+            border: none;
+            background-color: white;
+            visibility: hidden;
+        }
+
+        .all {
+            width: 40%;
+            height: 52%;
+            margin-top: 10%;
+            position: absolute;
+            margin: auto;
+            color: white;
+            line-height: 30px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+
+
+
+
+            visibility: hidden;
+
+        }
+        .all-data {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        
+
+
+        .back {
+            width: 5%;
+            height: 20px;
+            margin-left: 2%;
+            margin-top: 10px;
+            border-radius: 20px;
+            border: none;
+            background-color: rgb(96, 191, 226);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <h1>Weather app</h1>
+        <input type="text" class="in" placeholder="enter your city">
+        <button type="submit" class="btn">o</button>
+        <div class="color"></div>
+        <div class="result">
+
+            <h2 class="city">your city</h2>
+            <h3 class="weat">weather</h3>
+            <p class="temp">00</p>
+            <p class="wind">00</p>
+            <p class=" humidity">00</p>
+
+            <button class="more">More...</button>
+
+
+        </div>
+        <div class="all">
+            <button class="back">
+                <- </button>
+                    <h2 class="city1">as</h2>
+                    <h3 class="weat1">weather</h3>
+                    <div class="all-data">
+                        <div>
+                            <p class="temp1">00</p>
+                            <p class="wind1">00</p>
+                            <p class=" humidity1">00</p>
+                            <p class="feels_like">00</p>
+                            <p class="grnd_level">00</p>
+                            <p class="pressure">00</p>
+                            <p class="timezone">00</p>
+                            <p class="visibility">00</p>
+                        </div>
+                        <div>
+                            <p class="sea_level">00</p>
+                            <p class="temp_max">00</p>
+                            <p class="temp_min">00</p>
+                            <p class="sunrise">00</p>
+                            <p class="sunset">00</p>
+                            <p class="deg">00</p>
+                            <p class="lat">00</p>
+                            <p class="lon">00</p>
+
+                        </div>
+
+                    </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+    <script>
+
+        const api = "https:api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}"
+
+        const apiKey = "895c7dfc2e4b56c8ab309e70cee874ce"
+        const cit = document.querySelector(".in");
+
+
+        async function getWeather(city) {
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+
+            let res = await fetch(url)
+            let data = await res.json()
+            console.log(data);
+            if (data.cod == "404") {
+                alert("city not found")
+
+            }
+
+            document.querySelector(".city").innerText = data.name
+            document.querySelector(".temp").innerText = "Tempature " + data.main.temp + "°C"
+            document.querySelector(".wind").innerText = "Wind speed " + data.wind.speed + "km/h"
+            document.querySelector(".humidity").innerText = "Humidity " + data.main.humidity + "%"
+            document.querySelector(".weat").innerHTML = data.weather[0].main
+            document.querySelector(".result").style.backgroundColor = "rgba(0, 0, 0, 0.5)"
+
+            document.querySelector(".city1").innerText = data.name
+            document.querySelector(".temp1").innerText = "Tempature " + data.main.temp + " °C"
+            document.querySelector(".wind1").innerText = "Wind speed " + data.wind.speed + " km/h"
+            document.querySelector(".humidity1").innerText = "Humidity " + data.main.humidity + " %"
+            document.querySelector(".weat1").innerHTML = data.weather[0].main
+            document.querySelector(".feels_like").innerText = "Feels like " + data.main.feels_like + " °C"
+            document.querySelector(".grnd_level").innerText = "Ground level " + data.main.grnd_level + " °C"
+            document.querySelector(".pressure").innerText = "Pressure " + data.main.pressure + " hPa"
+            document.querySelector(".sea_level").innerText = "Sea level " + data.main.sea_level + " hPa"
+            document.querySelector(".temp_max").innerText = "Max tempature " + data.main.temp_max + " °C"
+            document.querySelector(".temp_min").innerText = "Min tempature " + data.main.temp_min + " °C"
+            document.querySelector(".sunrise").innerText = "Sunrise " + new Date(data.sys.sunrise * 1000).toLocaleTimeString()
+            document.querySelector(".sunset").innerText = "Sunset " + new Date(data.sys.sunset * 1000).toLocaleTimeString()
+            document.querySelector(".deg").innerText = "Degree " + data.wind.deg + " °"
+            document.querySelector(".timezone").innerText = "Timezone " + data.timezone / 3600 + " h"
+            document.querySelector(".visibility").innerText = "Visibility " + data.visibility / 1000 + " km"
+            document.querySelector(".lat").innerText = "Latitude " + data.coord.lat
+            document.querySelector(".lon").innerText = "Longitude " + data.coord.lon
+
+
+
+
+            if (data.weather[0].main == "Clear") {
+                document.querySelector(".color").style.backgroundColor = "blue"
+            } else if (data.weather[0].main == "Rain") {
+                document.querySelector(".color").style.backgroundColor = "green"
+            } else if (data.weather[0].main == "Clouds") {
+                document.querySelector(".color").style.backgroundColor = "gray"
+            } else if (data.weather[0].main == "Snow") {
+                document.querySelector(".color").style.backgroundColor = "white"
+            } else if (data.weather[0].main == "Thunderstorm") {
+                document.querySelector(".color").style.backgroundColor = "purple"
+            }
+
+
+
+
+        }
+
+
+        let city;
+        document.querySelector(".btn").addEventListener("click", () => {
+            document.querySelector(".more").style.visibility = "visible"
+
+            city = cit.value
+            getWeather(city)
+            cit.value = ""
+
+
+
+        })
+
+
+
+
+        document.querySelector(".more").addEventListener("click", () => {
+            document.querySelector(".all").style.visibility = "visible"
+            document.querySelector(".result").style.visibility = "hidden"
+            document.querySelector(".more").style.visibility = "hidden"
+            city = cit.value
+            getWeather(city)
+
+        })
+
+        document.querySelector(".back").addEventListener("click", () => {
+            document.querySelector(".all").style.visibility = "hidden"
+            document.querySelector(".result").style.visibility = "visible"
+            document.querySelector(".more").style.visibility = "visible"
+
+        })
+
+    </script>
+</body>
+
+</html>
